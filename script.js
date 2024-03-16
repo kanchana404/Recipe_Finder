@@ -4,9 +4,6 @@ console.log("Created By Kavitha Kanchana");
 console.log("All write deserved");
 console.log("https://github.com/kanchana404/");
 
-
-
-
 function search() {
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingedients.value}`)
         .then(response => response.json())
@@ -18,7 +15,7 @@ function search() {
 
             if (data.meals === null || data.meals.length === 0) {
                 const header = document.createElement('h1');
-                header.textContent = 'No recipes found for the entered ingredient.';
+                header.textContent = '"No recipes found for the entered ingredient.';
                 recipesContainer.appendChild(header);
 
                 setTimeout(() => {
@@ -42,12 +39,28 @@ function search() {
                 const mealName = document.createElement('h2');
                 mealName.textContent = meal.strMeal;
                 
-                const button = document.createElement('button');
-                button.classList.add('btn', 'btn-warning');
-                button.style.color = 'white';
-                button.innerHTML = '<b>Tutorial</b>';
+                const instructionsButton = document.createElement('button');
+                instructionsButton.classList.add('btn', 'btn-dark');
+                instructionsButton.style.color = 'white';
+                instructionsButton.innerHTML = '<b>Instructions</b>';
                 
-                button.addEventListener('click', () => {
+                instructionsButton.addEventListener('click', () => {
+                    Swal.fire({
+                        title: meal.strMeal,
+                        text: "Modal with a custom image.",
+                        imageUrl: meal.strMealThumb,
+                        imageWidth: 400,
+                        imageHeight: 300,
+                        imageAlt: "Custom image"
+                      });
+                });
+
+                const tutorialButton = document.createElement('button');
+                tutorialButton.classList.add('btn', 'btn-warning', 'ml-2');
+                tutorialButton.style.color = 'white';
+                tutorialButton.innerHTML = '<b>Tutorial</b>';
+                
+                tutorialButton.addEventListener('click', () => {
                     const tutorialLink = `https://www.youtube.com/results?search_query=how+to+make+${meal.strMeal.replace(/ /g, '+')}`;
                     window.open(tutorialLink, '_blank');
                 });
@@ -56,7 +69,11 @@ function search() {
                 containerDiv.appendChild(document.createElement('br'));
                 containerDiv.appendChild(document.createElement('br'));
                 containerDiv.appendChild(mealName);
-                containerDiv.appendChild(button);
+                containerDiv.appendChild(document.createElement('br'));
+                containerDiv.appendChild(instructionsButton);
+                containerDiv.appendChild(document.createElement('br'));
+                containerDiv.appendChild(document.createElement('br'));
+                containerDiv.appendChild(tutorialButton);
                 
                 mealDiv.appendChild(containerDiv);
                 
