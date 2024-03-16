@@ -45,14 +45,23 @@ function search() {
                 instructionsButton.innerHTML = '<b>Instructions</b>';
                 
                 instructionsButton.addEventListener('click', () => {
-                    Swal.fire({
-                        title: meal.strMeal,
-                        text: "Modal with a custom image.",
-                        imageUrl: meal.strMealThumb,
-                        imageWidth: 400,
-                        imageHeight: 300,
-                        imageAlt: "Custom image"
-                      });
+
+                    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const instructions = data.meals[0].strInstructions;
+                            Swal.fire({
+                                title: meal.strMeal,
+                                text: instructions,
+                                imageUrl: meal.strMealThumb,
+                                imageWidth: 400,
+                                imageHeight: 300,
+                                imageAlt: "Custom image"
+                              });
+                        });
+
+
+                    
                 });
 
                 const tutorialButton = document.createElement('button');
@@ -61,7 +70,13 @@ function search() {
                 tutorialButton.innerHTML = '<b>Tutorial</b>';
                 
                 tutorialButton.addEventListener('click', () => {
-                    const tutorialLink = `https://www.youtube.com/results?search_query=how+to+make+${meal.strMeal.replace(/ /g, '+')}`;
+                    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${meal.idMeal}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const tutorialLink = data.meals[0].strYoutube;
+                            window.open(tutorialLink, '_blank');
+                        });
+                    const tutorialLink = tutorialLink;
                     window.open(tutorialLink, '_blank');
                 });
                 
