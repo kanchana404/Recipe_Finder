@@ -31,6 +31,11 @@ function search(){
             button.style.color = 'white';
             button.innerHTML = '<b>Tutorial</b>';
             
+            button.addEventListener('click', () => {
+                const tutorialLink = `https://www.youtube.com/results?search_query=how+to+make+${meal.strMeal.replace(/ /g, '+')}`;
+                window.open(tutorialLink, '_blank');
+            });
+            
             containerDiv.appendChild(image);
             containerDiv.appendChild(document.createElement('br'));
             containerDiv.appendChild(document.createElement('br'));
@@ -42,6 +47,8 @@ function search(){
             recipesContainer.appendChild(mealDiv);
         });
     });
+
+
 
 
 
